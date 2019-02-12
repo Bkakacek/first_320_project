@@ -11,6 +11,6 @@
 
     <servlet-mapping>
         <servlet-name>NameListGet</servlet-name>
-        <url-pattern>/api/name_list_get</url-pattern>
+        <url-pattern>/api/get_name_list</url-pattern>
     </servlet-mapping>
 </web-app>
