@@ -13,4 +13,24 @@
         <servlet-name>NameListGet</servlet-name>
         <url-pattern>/api/get_name_list</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FormTestServlet</servlet-name>
+        <servlet-class>edu.simpson.computerscience.webdevelopment.FormTestServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FormTestServlet</servlet-name>
+        <url-pattern>/api/form_test_servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FormTestJSONServlet</servlet-name>
+        <servlet-class>edu.simpson.computerscience.webdevelopment.FormTestJSONServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FormTestJSONServlet</servlet-name>
+        <url-pattern>/api/form_test_json_servlet</url-pattern>
+    </servlet-mapping>
 </web-app>
