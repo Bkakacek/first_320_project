@@ -71,8 +71,14 @@ function validateFirstNameField() {
 
 
     if (firstNameRegEx.test(firstNameValidate)){
+        // Valid entry (Green check)
         firstNameAttrib.removeClass("is-invalid");
         firstNameAttrib.addClass("is-valid");
+    }
+    else {
+        // Invalid entry (Red cross)
+        firstNameAttrib.removeClass("is-valid");
+        firstNameAttrib.addClass("is-invalid");
     }
 }
 
@@ -81,7 +87,7 @@ function validateLastNameField() {
 
     // Last name variables
     var lastNameAttrib = $('#lastName');
-    var lastNameValidate = lastNameAttrib.val()
+    var lastNameValidate = lastNameAttrib.val();
 
     // Regular expression found at https://stackoverflow.com/questions/2385701/regular-expression-for-first-and-last-name
     // It allows for special characters in names (apostrophes, hyphens, etc.)
@@ -89,8 +95,14 @@ function validateLastNameField() {
 
 
     if (lastNameRegEx.test(lastNameValidate)) {
+        // Valid entry (Green check)
         lastNameAttrib.removeClass("is-invalid");
         lastNameAttrib.addClass("is-valid");
+    }
+    else{
+        // Invalid entry (Red cross)
+        lastNameAttrib.removeClass("is-valid");
+        lastNameAttrib.addClass("is-invalid");
     }
 }
 
@@ -104,8 +116,14 @@ function validateEmailField() {
 
     // Conditional checking the validity of the email field
     if (emailRegEx.test(emailValidate)) {
+        // Valid entry (Green check)
         emailAttrib.removeClass("is-invalid");
         emailAttrib.addClass("is-valid");
+    }
+    else {
+        // Invalid entry (Red cross)
+        emailAttrib.removeClass("is-valid");
+        emailAttrib.addClass("is-invalid");
     }
 }
 
@@ -119,8 +137,14 @@ function validatePhoneField() {
 
     // Conditional checking the validity of the phone field
     if (phoneRegEx.test(phoneValidate)) {
+        // Valid entry (Green check)
         phoneAttrib.removeClass("is-invalid");
         phoneAttrib.addClass("is-valid");
+    }
+    else {
+        // Invalid entry (Red cross)
+        phoneAttrib.removeClass("is-valid");
+        phoneAttrib.addClass("is-invalid");
     }
 }
 
@@ -137,8 +161,14 @@ function validateBirthdayField() {
 
     // Conditional checking the validity of the birthday field
     if (birthdayRegEx.test(birthdayValidate)) {
+        // Valid entry (Green check)
         birthdayAttrib.removeClass("is-invalid");
         birthdayAttrib.addClass("is-valid");
+    }
+    else {
+        // Invalid entry (Red cross)
+        birthdayAttrib.removeClass("is-valid");
+        birthdayAttrib.addClass("is-invalid");
     }
 
 }
