@@ -83,21 +83,26 @@ public class PersonDAO {
         return list;
     }
     public static void addPersonData(Person person) {
+        // Set the connection equal to null
         Connection conn = null;
+
+        // Set the prepared statement with all run info set to null
         PreparedStatement stmt = null;
 
         try {
+            // Variables for the upcoming sql code
             conn = DBHelper.getConnection();
             String sql = "INSERT INTO person (first, last, email, phone, birthday) VALUES (?, ?, ?, ?, ?);";
             stmt = conn.prepareStatement(sql);
 
-
+            // Get the info from the database using the prepared statement variable
             stmt.setString(1, person.getFirst());
             stmt.setString(2, person.getLast());
             stmt.setString(3, person.getEmail());
             stmt.setString(4, person.getPhone());
             stmt.setString(5, person.getBirthday());
 
+            // Update the fields with using the variables from the person class
             stmt.execute();
 
         }
@@ -106,6 +111,7 @@ public class PersonDAO {
         } catch (Exception e) {
             log.log(Level.SEVERE, "Error", e );
         } finally {
+            // Ok, close set the statement, and connection
             try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
             try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
         }

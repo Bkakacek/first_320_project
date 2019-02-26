@@ -5,17 +5,17 @@ function updateTable() {
             // json_result is an object. You can set a breakpoint, or print
             // it to see the fields. Specifically, it is an array of objects.
             // Here we loop the array and print the first name.
-        var tr = $('<tr/>');
-        tr = $('<tr/>');
-        tr.append("<td>" + json_result[0].id + "</td>");
-        tr.append("<td>" + json_result[0].first + "</td>");
-        tr.append("<td>" + json_result[0].last + "</td>");
-        tr.append("<td>" + json_result[0].email + "</td>");
-        tr.append("<td>" + json_result[0] + "</td>");
-        tr.append("<td>" + json_result[0].birthday + "</td>");
-        $('table').append(tr);
+            var tr = $('<tr/>');
+            tr = $('<tr/>');
+            tr.append("<td>" + json_result[0].id + "</td>");
+            tr.append("<td>" + json_result[0].first + "</td>");
+            tr.append("<td>" + json_result[0].last + "</td>");
+            tr.append("<td>" + json_result[0].email + "</td>");
+            tr.append("<td>" + json_result[0] + "</td>");
+            tr.append("<td>" + json_result[0].birthday + "</td>");
+            $('table').append(tr);
 
-        for (var i = 0; i < json_result.length; i++) {
+            for (var i = 0; i < json_result.length; i++) {
                 tr = $('<tr/>');
                 tr.append("<td>" + json_result[i].id + "</td>");
                 tr.append("<td>" + json_result[i].first + "</td>");
@@ -193,33 +193,53 @@ function saveChanges() {
     validatePhoneField();
     validateBirthdayField();
     jqueryPostJSONButtonAction();
-    $('#myModal').modal('hide');
     // Show the console the functions were executed
     console.log("Changes Saved")
 }
 
+// ******ATTENTION All part of Lab 06******
+// A block comment before this function should bring you back to Lab 05
 function jqueryPostJSONButtonAction() {
 
-    //Create vari
+    // Create variables for each valid attribute
     var firstNameAttrib = $("#firstName").val();
     var lastNameAttrib = $("#lastName").val();
     var emailAttrib = $("#email").val();
     var phoneAttrib = $("#phone").val();
     var birthdayAttrib = $("#birthday").val();
 
+    // Set url to the NameListEditServlet
     var url = "api/name_list_edit";
     var dataToServer = {first : firstNameAttrib, last : lastNameAttrib, email : emailAttrib, phone : phoneAttrib,
         birthday : birthdayAttrib};
 
+    // Post the data to the web page
     $.ajax({
         type: 'POST',
         url: url,
         data: JSON.stringify(dataToServer),
         success: [function(dataFromServer) {
             console.log(dataFromServer);
-            updateTable()
+            tableRefresh();
+
         }],
         contentType: "application/json",
         dataType: 'text'
     });
+
+    // Function to automatically refresh the tables
+    function tableRefresh()
+    {
+        // Retrieved this solution from https://www.daniweb.com/programming/web-development/threads/113340/delete-all-rows-from-table-in-javascript
+        var table = document.getElementById("datatable");
+        for(var row = table.rows.length - 1; row > 0; row--)
+        {
+            table.deleteRow(row);
+        }
+        $('#myModal').modal('hide');
+        // Upadte the table with the new data
+        updateTable();
+
+    }
+
 }

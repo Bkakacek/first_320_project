@@ -11,22 +11,32 @@ import java.io.*;
 @WebServlet(name = "NameListEdit")
 public class NameListEdit extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // You can output in any format, text/JSON, text/HTML, etc. We'll keep it simple
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = request.getReader();
-        Gson gson = new Gson();
+        response.setContentType("text/JSON");
+        PrintWriter out = response.getWriter();
 
-        try {
-            String line = bufferedReader.readLine();
-            while (line != null) {
-                stringBuilder.append(line).append("\n");
-                line = bufferedReader.readLine();
-            }
-        }
-        finally{
-            bufferedReader.close();
-        }
-        PersonDAO.addPersonData(gson.fromJson(stringBuilder.toString(), Person.class));
+        // Print that this is a post
+        out.println("JSON Post");
+
+        // Open the request for reading. Read in each line, put it into a string.
+        // Yes, I think there should be an easier way.
+        java.io.BufferedReader in = request.getReader();
+        String requestString = new String();
+        for (String line; (line = in.readLine()) != null; requestString += line);
+
+        // Output the string we got as a request, just as a check
+        out.println(requestString);
+
+        // Great! Now we want to use GSON to parse the object, and pop it into our business object. Field
+        // names have to match. That's the magic.
+        Gson gson = new Gson();
+        // Instead of making the class the TestBusiness object. I changed it to the Person class
+        // In order to grab all of the information based on the form fields
+        Person fromJson = gson.fromJson(requestString, Person.class);
+        PersonDAO.addPersonData(fromJson);
+
+        // Output the data from each field
+        //out.println("Object test: " + fromJson.getFirst() + ", " + fromJson.getLast() + ", "
+                //+ fromJson.getEmail() + ", " + fromJson.getPhone()+ ", " + fromJson.getBirthday());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
