@@ -34,9 +34,6 @@ public class NameListEdit extends HttpServlet {
         Person fromJson = gson.fromJson(requestString, Person.class);
         PersonDAO.addPersonData(fromJson);
 
-        // Output the data from each field
-        //out.println("Object test: " + fromJson.getFirst() + ", " + fromJson.getLast() + ", "
-                //+ fromJson.getEmail() + ", " + fromJson.getPhone()+ ", " + fromJson.getBirthday());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
