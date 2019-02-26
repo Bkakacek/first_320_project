@@ -5,16 +5,23 @@ function updateTable() {
             // json_result is an object. You can set a breakpoint, or print
             // it to see the fields. Specifically, it is an array of objects.
             // Here we loop the array and print the first name.
-        var tr;
+        var tr = $('<tr/>');
+        tr = $('<tr/>');
+        tr.append("<td>" + json_result[0].id + "</td>");
+        tr.append("<td>" + json_result[0].first + "</td>");
+        tr.append("<td>" + json_result[0].last + "</td>");
+        tr.append("<td>" + json_result[0].email + "</td>");
+        tr.append("<td>" + json_result[0] + "</td>");
+        tr.append("<td>" + json_result[0].birthday + "</td>");
+        $('table').append(tr);
+
         for (var i = 0; i < json_result.length; i++) {
-                var dashedNumber = json_result[i].phone.substring(0,3) + "-" + json_result[i].phone.substring(3,6) + "-"
-                + json_result[i].phone.substring(6,10);
                 tr = $('<tr/>');
                 tr.append("<td>" + json_result[i].id + "</td>");
                 tr.append("<td>" + json_result[i].first + "</td>");
                 tr.append("<td>" + json_result[i].last + "</td>");
                 tr.append("<td>" + json_result[i].email + "</td>");
-                tr.append("<td>" + dashedNumber + "</td>");
+                tr.append("<td>" + json_result[i].phone + "</td>");
                 tr.append("<td>" + json_result[i].birthday + "</td>");
                 $('table').append(tr);
             }
@@ -74,6 +81,7 @@ function validateFirstNameField() {
         // Valid entry (Green check)
         firstNameAttrib.removeClass("is-invalid");
         firstNameAttrib.addClass("is-valid");
+        var firstNameAttribTrue = true;
     }
     else {
         // Invalid entry (Red cross)
@@ -173,21 +181,45 @@ function validateBirthdayField() {
 
 }
 
-// Executes each function on a button click
-
 var saveChangesButton = $('#saveChanges');
 saveChangesButton.on("click", saveChanges);
 
 function saveChanges() {
 
-        // Calling all functions. It's like assembling the Avengers!!
-        validateFirstNameField();
-        validateLastNameField();
-        validateEmailField();
-        validatePhoneField();
-        validateBirthdayField();
+    // Calling all functions. It's like assembling the Avengers!!
+    validateFirstNameField();
+    validateLastNameField();
+    validateEmailField();
+    validatePhoneField();
+    validateBirthdayField();
+    jqueryPostJSONButtonAction();
+    $('#myModal').modal('hide');
+    // Show the console the functions were executed
+    console.log("Changes Saved")
+}
 
-        // Show the console the functions were executed
-        console.log("Changes Saved")
-    }
+function jqueryPostJSONButtonAction() {
 
+    //Create vari
+    var firstNameAttrib = $("#firstName").val();
+    var lastNameAttrib = $("#lastName").val();
+    var emailAttrib = $("#email").val();
+    var phoneAttrib = $("#phone").val();
+    var birthdayAttrib = $("#birthday").val();
+
+    var url = "api/name_list_edit";
+    var dataToServer = {first : firstNameAttrib, last : lastNameAttrib, email : emailAttrib, phone : phoneAttrib,
+        birthday : birthdayAttrib};
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(dataToServer),
+        success: [function(dataFromServer) {
+            console.log(dataFromServer);
+            updateTable()
+        }],
+        contentType: "application/json",
+        dataType: 'text'
+    });
+}
